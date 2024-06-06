@@ -1,0 +1,12 @@
+First install pygame.
+You can do this by running a simple command in the terminal
+    for windows users run
+        py -m pip install -U pygame --user
+    for Mac users run
+        python3 -m pip install -U pygame --user
+if this does not work for your device see https://www.pygame.org/wiki/GettingStarted 
+
+Download numpy 
+
+
+When you have neighbors = 4, attribute it the class Twodimensions
