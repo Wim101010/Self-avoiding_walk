@@ -27,7 +27,6 @@ class Lattice(ABC):
     def calculate(self): #we want to calculate the total amount of SAW's 
         #we first look at the 2D calculation for ease
         #we can only calculate the SAW's moving first right and then up and multiply by 8 because of symmetry. (See used math)
-        
         pass
 
     #def distance(self) #is disdtance from starting point
@@ -68,8 +67,40 @@ class FourNbr(Lattice): #subclass for 2 dimensional lattice
             position = (position[0]+dx,position[1]+dy)
             p.goto(position)
             path.append(position)
-            
-        turtle.exitonclick()
+            turtle.exitonclick()
+        
+    def lattice(N): #this forms the lattice
+        amount = (N+1)**2
+        cells = np.full(amount, True, dtype=bool)
+        return cells
+
+    def calculate(self):
+        #steps we want to take are:
+        #do all possible steps we can take
+        #add back
+        #when n == N count the amount of path's
+        N = self.lSAW
+        paths = FourNbr.create_paths(N, N)
+        return len(paths)
+
+    def create_paths(N, n):
+        paths = []
+        if n == 0:
+            latt = FourNbr.lattice(N)
+            latt[0]=False
+            paths = [(0,latt)]
+            return paths
+        
+        movements = [1,-1, (N+1), -(N+1)]
+        for path in FourNbr.create_paths(N, n-1):
+            for move in movements:
+                latt = path[1]
+                i = (path[0]+move)%len(latt)
+                if latt[i]:
+                    latt_copy = list(latt.copy())
+                    latt_copy[i] = False
+                    paths.append((i, latt_copy))
+        return paths
 
 class ThreeNbr(Lattice):
     def __init__(self, nbr=3,lSAW=0):
@@ -118,8 +149,5 @@ class ThreeNbr(Lattice):
             path.append(position)
         turtle.exitonclick()
 
-#testcase1 = FourNbr(lSAW=100)
-#testcase1.draw()
-
-testcase2 = ThreeNbr(lSAW=100)
-testcase2.draw()
+testcase = ThreeNbr(lSAW=100)
+testcase.draw()

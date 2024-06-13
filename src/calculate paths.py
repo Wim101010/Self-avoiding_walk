@@ -1,68 +1,44 @@
-#this function calculate's the total amount of SAW's where each point has 4 neighbors
 import math
 import numpy as np
 
-def necsize(length): #necessary size of the lattice
-    size = (length+1)**2 #the + 1 is the starting position
-    return size
-    #explained in used math
-
-def cells(lenght):
-    amount = necsize(lenght)
+def lattice(N): #this forms the lattice
+    amount = (N+1)**2
     cells = np.full(amount, True, dtype=bool)
     return cells
 
-def form_paths(N, remaining_length, I):
-    if N == remaining_length:
+#the arguments are:
+#N = length of SAW
+#n = the length we are formulating the paths of
+#latt = vector filled with Booleans wheter the path has passed this location
+#i = location where the path has ended
+#path = tuple(i, latt)
+#paths = list of path
 
+def count(N):
+    #steps we want to take are:
+    #do all possible steps we can take
+    #add back
+    #when n == N count the amount of path's
+    paths = create_paths(N, N)
+    return len(paths)
+
+def create_paths(N, n):
     paths = []
-    for i in I:
-        form_paths(N, remaining_length+1,I)
+    if n == 0:
+        latt = lattice(N)
+        latt[0]=False
+        paths = [(0,latt)]
+        return paths
+    
+    movements = [1,-1, (N+1), -(N+1)] #change to nbr
+    for path in create_paths(N, n-1):
+        for move in movements: #nbr in nbrs
+            latt = path[1]
+            i = (path[0]+move)%len(latt)
+            if latt[i]:
+                latt_copy = list(latt.copy())
+                latt_copy[i] = False
+                paths.append((i, latt_copy))
+    return paths
 
-    end = I[0]
-    return paths #paths is a list of tuples
-
-def form_p(N, remaining_lengt, I):
-    if N == remaining_lengt:
-        return (N, N, (0, cells(N)))
-    if remaining_lengt > 0:
-        form_p(N, remaining_lengt+1, I)
-        
-
-
-def make_valid_moves(i):
-    N = int(math.sqrt(len[i[1]])) #this has to be made better
-    movement = (1, -1, N, -N) 
-    possible_paths = []
-    for move in movement:
-        i[1] = cells
-        if cells[i[0]+move]:
-            cells[i[0]+move]=False
-            possible_paths.append((i[0]+movement,cells))
-    return possible_paths
-
-def check(postion, lattice, length): #returns how many moves are possible from this position
-    N = int(length)
-    movement = (1, -1, N, -N)
-    j = 0
-    for i in movement:
-        if lattice[postion + i]:
-            j += 1
-    return j
-
-#we use a recursive method
-#save paths as a tuple of the lattice and the last position
-#then check for every tuple how many last steps are possible
-def count(N): #N = length SAW
-    if N == 1:
-        return 4
-    if N == 2:
-        return 8
-    cells = cells(N) #here we create the lattice
-
-    k = N-1
-    paths_k = form_paths(k, cells) #k := N-1
-    #do times 8
-
-print(count)
-
+print(count(12))
