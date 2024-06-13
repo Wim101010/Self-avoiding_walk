@@ -8,5 +8,6 @@ if this does not work for your device see https://www.pygame.org/wiki/GettingSta
 
 Download numpy 
 
-
-When you have neighbors = 4, attribute it the class Twodimensions
+There are 2 special subclasses
+    The subclass Fournbr will give a visual representation of a self-avoiding walk in a lattice with 4 neighbors
+    The subclass Threenbr will give a visual representation of a self-avoiding walk in a lattice with 3 neighbors

@@ -1,8 +1,19 @@
+# design choices
 The code uses different types and function
 
-We define a class for the lattice. This builts a lattice given the lenght of the SAW and the amount of neighbors.
+## class organisation
+We define a abstract class for the lattice. This builts a lattice given the lenght of the SAW and the amount of neighbors.
 The lattice's main information is stored in the cells. This is an array in which every value has a Boolean that represents if the path has already gone through this point. 
 
-On this lattice we define different functions
+On this lattice we define different functions (see more information on these functions later)
     draw gives a visual representation of the SAW
     calculate gives the total amount of SAW's possible
+    distance gives the distance from the origin
+
+## draw 
+draw is the visual represenation
+this is an abstract function that only has a implementation when neighbors = 4 or = 3
+these self avoiding walks can be visualized in a two dimensional plane
+
+## calculate
+for this we use the cells stored in the abstract class

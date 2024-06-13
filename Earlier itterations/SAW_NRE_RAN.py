@@ -1,3 +1,9 @@
+#this script draws differend kinds of path's
+#the first function is deciding whihc path to draw based on your input
+#the second function draws a completely random path
+#the third function draws a non-reversing path
+#the fourth function draws a self avoiding walk
+
 import random
 import turtle
 import numpy as np

@@ -1,0 +1,8 @@
+## 1. Total amount of cell's needed
+We use cells = (N+1)^2 since a path of lenght 2 needs 3 sqaures
+
+
+neighbors = 3
+
+
+## 2. symmetry in SAW's 

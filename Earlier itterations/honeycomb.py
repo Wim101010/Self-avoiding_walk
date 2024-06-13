@@ -1,3 +1,5 @@
+#this script draws a visualisation of a 3 neighbor's SAW by using turtle
+
 import turtle
 import random
 
@@ -15,14 +17,16 @@ def SAW(length): #very similar to RAN and NRE
 
     for i in range(length):
         movements = []  #either up or down
-        if position[1] % 20 == 0:
-            movements.append((10,0))
-            movements.append((10,10))
-            movements.append((-10,-10))
+        if position[0] % 20 == 0:
+            if position[1]%30 == 0:
+                movements = [(0,10),(10,-5),(-10,-5)]
+            else:
+                movements = [(0,-10),(10,5),(-10,5)]
         else:
-            movements.append((-10,0))
-            movements.append((-10,0))
-
+            if (position[1]-15)%30 == 0: #same idea but y-axis is moved down 1,5 step
+                movements = [(0,10),(10,-5),(-10,-5)]
+            else:
+                movements = [(0,-10),(10,5),(-10,5)]
         valid_move = False
         while valid_move == False: #while loop to see possible moves
             move = random.choice(movements)
