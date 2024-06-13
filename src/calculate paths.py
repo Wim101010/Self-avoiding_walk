@@ -1,5 +1,6 @@
 import math
 import numpy as np
+import time
 
 def lattice(N): #this forms the lattice
     amount = (N+1)**2
@@ -41,4 +42,12 @@ def create_paths(N, n):
                 paths.append((i, latt_copy))
     return paths
 
-print(count(12))
+i = 14
+if i == 14:
+    start = time.time()
+    amount = count(i)
+    end = time.time()
+    elapsed_time = end-start
+    print(i, count(i))
+    print("Caculation time = ", (end-start))
+    i = 15
