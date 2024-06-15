@@ -42,12 +42,11 @@ def create_paths(N, n):
                 paths.append((i, latt_copy))
     return paths
 
-i = 14
-if i == 14:
+i = 1
+for i in range(13):
     start = time.time()
     amount = count(i)
     end = time.time()
     elapsed_time = end-start
     print(i, count(i))
     print("Caculation time = ", (end-start))
-    i = 15
