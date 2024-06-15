@@ -2,15 +2,17 @@ import turtle
 import random
 import numpy as np 
 from abc import ABC, abstractmethod
+from calculate4nbr import *
 
 def necsize(length, nbr): #necessary cells
     size = length**(nbr/2)
+    return int(size)
     #explained in used math
 
 def cells(amount):
     cells = np.full(amount, True, dtype=bool)
+    return cells
     #this creates an array of Booleans True
-    
 
 class Lattice(ABC):
     def __init__(self, nbr, lSAW):
@@ -25,19 +27,19 @@ class Lattice(ABC):
         pass
 
     def calculate(self): #we want to calculate the total amount of SAW's 
-        #we first look at the 2D calculation for ease
-        #we can only calculate the SAW's moving first right and then up and multiply by 8 because of symmetry. (See used math)
+        #this function is only defined on 4 neigbhors/square lattice
         pass
 
-    #def distance(self) #is disdtance from starting point
+    def distance(self): #is distance from starting point
+        pass
         
 class FourNbr(Lattice): #subclass for 2 dimensional lattice
-    print("Im trying to draw")
     def __init__(self, nbr=4, lSAW=0): 
         super().__init__(4, lSAW) #we set neighbors to always 4, lenght of SAW is still a variable
         self.lSAW = lSAW
 
     def draw(self):
+        print("Im trying to draw")
         super().draw() #this overpowers the draw() function implemented in the abstract class
 
         screen = turtle.getscreen()
@@ -68,39 +70,11 @@ class FourNbr(Lattice): #subclass for 2 dimensional lattice
             p.goto(position)
             path.append(position)
             turtle.exitonclick()
-        
-    def lattice(N): #this forms the lattice
-        amount = (N+1)**2
-        cells = np.full(amount, True, dtype=bool)
-        return cells
 
     def calculate(self):
-        #steps we want to take are:
-        #do all possible steps we can take
-        #add back
-        #when n == N count the amount of path's
-        N = self.lSAW
-        paths = FourNbr.create_paths(N, N)
-        return len(paths)
-
-    def create_paths(N, n):
-        paths = []
-        if n == 0:
-            latt = FourNbr.lattice(N)
-            latt[0]=False
-            paths = [(0,latt)]
-            return paths
-        
-        movements = [1,-1, (N+1), -(N+1)]
-        for path in FourNbr.create_paths(N, n-1):
-            for move in movements:
-                latt = path[1]
-                i = (path[0]+move)%len(latt)
-                if latt[i]:
-                    latt_copy = list(latt.copy())
-                    latt_copy[i] = False
-                    paths.append((i, latt_copy))
-        return paths
+        print("Calculating...")
+        output = count4nbr(self.lSAW)
+        print("For lenght", self.lSAW, "there are", f'{output[0]:_}', "possible SAW's. \n Calculation time: ", format(output[1], '.3E'))
 
 class ThreeNbr(Lattice):
     def __init__(self, nbr=3,lSAW=0):
@@ -149,5 +123,5 @@ class ThreeNbr(Lattice):
             path.append(position)
         turtle.exitonclick()
 
-testcase = ThreeNbr(lSAW=100)
-testcase.draw()
+testcase = FourNbr(lSAW=13)
+testcase.calculate()

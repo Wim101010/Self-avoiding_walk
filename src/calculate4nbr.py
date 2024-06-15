@@ -15,13 +15,16 @@ def lattice(N): #this forms the lattice
 #path = tuple(i, latt)
 #paths = list of path
 
-def count(N):
+def count4nbr(N):
+    start = time.time()
     #steps we want to take are:
     #do all possible steps we can take
     #add back
     #when n == N count the amount of path's
     paths = create_paths(N, N)
-    return len(paths)
+    end = time.time()
+    elapsed = end-start
+    return (len(paths), elapsed)
 
 def create_paths(N, n):
     paths = []
@@ -41,12 +44,3 @@ def create_paths(N, n):
                 latt_copy[i] = False
                 paths.append((i, latt_copy))
     return paths
-
-i = 1
-for i in range(13):
-    start = time.time()
-    amount = count(i)
-    end = time.time()
-    elapsed_time = end-start
-    print(i, count(i))
-    print("Caculation time = ", (end-start))
