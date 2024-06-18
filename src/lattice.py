@@ -2,7 +2,8 @@ import turtle
 import random
 import numpy as np 
 from abc import ABC, abstractmethod
-from calculate4nbr import *
+from functions_square import count4nbr, average_distance4nbr
+from functions_hexagonal import count3nbr#, average_distance3nbr
 
 def necsize(length, nbr): #necessary cells
     size = length**(nbr/2)
@@ -39,8 +40,7 @@ class FourNbr(Lattice): #subclass for 2 dimensional lattice
         self.lSAW = lSAW
 
     def draw(self):
-        print("Im trying to draw")
-        super().draw() #this overpowers the draw() function implemented in the abstract class
+        print("Drawing") #this overpowers the draw() function implemented in the abstract class
 
         screen = turtle.getscreen()
         turtle.title("Self-Avoiding Walk with 4 neighbors")
@@ -49,7 +49,6 @@ class FourNbr(Lattice): #subclass for 2 dimensional lattice
 
         position = (0,0)
         path = [(0,0)]
-
         for i in range(self.lSAW):
             movements = [(0,10),(10,0),(-10,0),(0,-10)]
             valid_move = False 
@@ -59,30 +58,35 @@ class FourNbr(Lattice): #subclass for 2 dimensional lattice
                 dy = move[1]
                 new_position = (position[0]+dx,position[1]+dy)
                 if new_position not in path: #if it wants to move to an empty lattice, do that move
+                    
                     valid_move = True
                 else: 
                     movements.remove(move) #otherwise remove that move and try again
                     if movements == []: #this happens when it is at a dead end
                         print("Dead end")
                         turtle.exitonclick()
-
             position = (position[0]+dx,position[1]+dy)
             p.goto(position)
             path.append(position)
-            turtle.exitonclick()
+        turtle.exitonclick()
 
     def calculate(self):
         print("Calculating...")
         output = count4nbr(self.lSAW)
-        print("For lenght", self.lSAW, "there are", f'{output[0]:_}', "possible SAW's. \n Calculation time: ", format(output[1], '.3E'))
+        print("For lenght", self.lSAW, "there are", f'{output[0]:_}', 
+              "possible SAW's. \n Calculation time: ", format(output[1], '.3E'))
+
+    def distance(self):
+        print("Calculating")
+        output = average_distance4nbr(self.lSAW)
+        print("For lenght", self.lSAW, "the average distance from the starting point is", f'{output[0]:.3E}' , 
+              ". \n Calculation time: ", format(output[1], '.3E'))
 
 class ThreeNbr(Lattice):
     def __init__(self, nbr=3,lSAW=0):
         super().__init__(3, lSAW) #we set neighbors to always 3, lenght of SAW is still a variable
 
     def draw(self): #this function overpowers the abstract draw function 
-        super().draw
-        
         screen = turtle.getscreen()
         turtle.title("Self-Avoiding Walk with 3 neighbors")
         p = turtle.Turtle()
@@ -123,5 +127,12 @@ class ThreeNbr(Lattice):
             path.append(position)
         turtle.exitonclick()
 
-test = FourNbr(lSAW=14)
-test.calculate()
+    def calculate(self):
+        print("Calculating...")
+        output = count3nbr(self.lSAW)
+        print("For lenght", self.lSAW, "there are", f'{output[0]:_}', 
+              "possible SAW's. \n Calculation time: ", format(output[1], '.3E'))
+        
+
+test = FourNbr(lSAW=6)
+test.distance()
