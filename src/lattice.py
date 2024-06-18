@@ -123,5 +123,5 @@ class ThreeNbr(Lattice):
             path.append(position)
         turtle.exitonclick()
 
-testcase = FourNbr(lSAW=13)
-testcase.calculate()
+test = FourNbr(lSAW=14)
+test.calculate()
