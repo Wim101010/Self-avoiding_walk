@@ -1,6 +1,5 @@
 import numpy as np
 import time
-import math
 
 def latt_optimized(N): #this forms the lattice needed for calculation the total amount of possible SAW's
     amount = (N+1)**2 #we only make a quarter of the lattice to improve on memory
@@ -72,9 +71,10 @@ def distance_start(path, N):
     start = 2*N**2+2*N #this is the mid-point of the lattice as an index
     hor_start = start%size #x-position
     ver_start = start//size #y-position
-    hor_distance = postion%size - hor_start #dx between start and end
-    ver_distance = postion//size - ver_start #dy between start and end
-    abs_distance = math.sqrt(hor_distance**2+ver_distance**2) #Pythagora's theorem to calculate total distance
+    hor_distance = abs(postion%size - hor_start) #dx between start and end
+    ver_distance = abs(postion//size - ver_start) #dy between start and end
+    #Shortest path is always just horizontal steps + vertical steps
+    abs_distance = hor_distance+ver_distance 
     return (abs_distance)
 
 def create_paths(N, n): #We use a similar recursion as before, only with a changed row-lenght

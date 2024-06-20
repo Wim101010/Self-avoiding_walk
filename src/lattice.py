@@ -1,9 +1,9 @@
 import turtle
 import random
 import numpy as np 
-from abc import ABC, abstractmethod
+from abc import ABC
 from functions_square import count4nbr, average_distance4nbr
-from functions_hexagonal import count3nbr#, average_distance3nbr
+from functions_hexagonal import count3nbr, average_distance3nbr
 
 def necsize(length, nbr): #necessary cells
     size = length**(nbr/2)
@@ -77,7 +77,7 @@ class FourNbr(Lattice): #subclass for 2 dimensional lattice
               "possible SAW's. \n Calculation time: ", format(output[1], '.3E'))
 
     def distance(self):
-        print("Calculating")
+        print("Calculating...")
         output = average_distance4nbr(self.lSAW)
         print("For lenght", self.lSAW, "the average distance from the starting point is", f'{output[0]:.3E}' , 
               ". \n Calculation time: ", format(output[1], '.3E'))
@@ -133,6 +133,9 @@ class ThreeNbr(Lattice):
         print("For lenght", self.lSAW, "there are", f'{output[0]:_}', 
               "possible SAW's. \n Calculation time: ", format(output[1], '.3E'))
         
-
-test = FourNbr(lSAW=6)
-test.distance()
+    def distance(self):
+        print("Calculating...")
+        output = average_distance3nbr(self.lSAW)
+        print("For lenght", self.lSAW, "the average distance from the starting point is", f'{output[0]:.3E}' , 
+              ". \n Calculation time: ", format(output[1], '.3E'))
+       

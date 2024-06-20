@@ -55,23 +55,37 @@ def create_paths(N, n):
 def average_distance3nbr(N):
     start = time.time()
     paths = create_paths(N, N) 
-    distance = avg_distance(paths)
-    end = time.time()
-    elapsed = end-start
-    return (distance, elapsed)
-
-def avg_distance(paths): #HIER KLOPT NOG NIKS VAN!
+    dis = []
     for path in paths:
         end = list(path.items())[-1][0] #last postition
-        x_pos = end[0]
-        y_pos = end[1]
-        hor_steps = abs(int(x_pos/10))
-        if y_pos>=0:
-            ver_steps = abs(math.ceil(y_pos/15)) #ceiling since first fuc
-        if y_pos<0:
-            ver_steps = abs(y_pos//15) #floorfunction
-        print(hor_steps,ver_steps)
+        x = end[0]
+        y = end[1]   
+        dis.append(distance(x,y))   
+    avg_distance = sum(dis)/len(dis)
+    end = time.time()
+    elapsed = end-start
+    return (avg_distance, elapsed)
 
-average_distance3nbr(4)
-
-        
+def distance(x,y):
+    if y>=0:
+        hor_steps=abs(int(x/10))
+        ver_steps=(y+5)//15
+        if  hor_steps>=ver_steps:
+            return hor_steps+ver_steps
+        else:
+            if y%15==0:
+                hor_steps=ver_steps
+            else:
+                hor_steps=ver_steps-1
+            return hor_steps+ver_steps
+    else:
+        hor_steps=abs(int(x/10))
+        ver_steps=(abs(y)//15)
+        if hor_steps>=(ver_steps+1):
+            return hor_steps+ver_steps
+        else:
+            if y%15==0:
+                hor_steps=ver_steps
+            else:
+                hor_steps=ver_steps+1
+            return hor_steps+ver_steps
