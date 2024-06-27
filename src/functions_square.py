@@ -22,14 +22,16 @@ def square_latt(N): #this forms the lattice needed to calculate the average dist
 #CODE NEEDED TO CALCULATE TOTAL AMOUNT OF SAWs
 def count4nbr(N):
     start = time.time()
-    paths = create_paths(N, N) #we start the recursion
+    if N == 0:
+        return (0,0)
+    paths = create_paths1(N, N) #we start the recursion
     end = time.time()
     elapsed = end-start
     return (4*len(paths), elapsed) #times 4 to compensate for the symmetry
 
-def create_paths(N, n):
+def create_paths1(N, n):
     paths = []
-    
+
     if n == 1:
         #We set the recursion base at n = 1 and fix the first step
         #By doing this you count only a quarter of the paths (these paths are symmetric)
@@ -41,7 +43,7 @@ def create_paths(N, n):
         return paths
     
     movements = [1,-1, (N+1), -(N+1)] #the first to movements are left/right, second two are up/down (move the index 1 row)
-    for path in create_paths(N, n-1): #with n = 1 there is only 1 path
+    for path in create_paths1(N, n-1): #with n = 1 there is only 1 path
         for move in movements: #make all possible moves
             latt = path[1]
             i = (path[0]+move)%len(latt)
@@ -56,7 +58,7 @@ def create_paths(N, n):
 #CODE NEEDED TO CALCULATE AVERAGE DISTANCE
 def average_distance4nbr(N):
     start = time.time()
-    paths = create_paths(N, N) #here we start the recursion
+    paths = create_paths2(N, N) #here we start the recursion
     distance = [] #this list has all the distances for the different SAW's of lenght N
     for path in paths: 
         distance.append(distance_start(path, N))
@@ -77,7 +79,7 @@ def distance_start(path, N):
     abs_distance = hor_distance+ver_distance 
     return (abs_distance)
 
-def create_paths(N, n): #We use a similar recursion as before, only with a changed row-lenght
+def create_paths2(N, n): #We use a similar recursion as before, only with a changed row-lenght
     paths = []
     if n == 0:
         latt = square_latt(N)
@@ -86,7 +88,7 @@ def create_paths(N, n): #We use a similar recursion as before, only with a chang
         return paths
     
     movements = [1,-1, (2*N+1), -(2*N+1)] 
-    for path in create_paths(N, n-1):
+    for path in create_paths2(N, n-1):
         for move in movements: 
             latt = path[1]
             i = (path[0]+move)

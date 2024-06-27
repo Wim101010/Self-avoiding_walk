@@ -75,6 +75,9 @@ class FourNbr(Lattice): #subclass for 2 dimensional lattice
         output = count4nbr(self.lSAW)
         print("For lenght", self.lSAW, "there are", f'{output[0]:_}', 
               "possible SAW's. \n Calculation time: ", format(output[1], '.3E'))
+        
+        #this is used to get the results in the report      
+        #print(self.lSAW, '&', f'{output[0]:_}', '&', format(output[1], '.3E')) 
 
     def distance(self):
         print("Calculating...")
@@ -132,10 +135,21 @@ class ThreeNbr(Lattice):
         output = count3nbr(self.lSAW)
         print("For lenght", self.lSAW, "there are", f'{output[0]:_}', 
               "possible SAW's. \n Calculation time: ", format(output[1], '.3E'))
+
+        #this is used to get the results in the report      
+        #print(self.lSAW, '&', f'{output[0]:_}', '&', format(output[1], '.3E'))       
         
     def distance(self):
         print("Calculating...")
         output = average_distance3nbr(self.lSAW)
         print("For lenght", self.lSAW, "the average distance from the starting point is", f'{output[0]:.3E}' , 
               ". \n Calculation time: ", format(output[1], '.3E'))
-       
+
+
+#this is used to get the results used in the paper:
+#for i in range(21):
+    #test = ThreeNbr(lSAW=i)
+    #test.calculate()
+#for i in range(14):
+    #output = (average_distance3nbr(i)[0], average_distance4nbr(i)[0])
+    #print(i, '&', f'{output[0]:.3}', '&', f'{output[1]:.3}', '\\')
